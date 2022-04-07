@@ -1,0 +1,36 @@
+PROG->DECLS STMTS
+DECLS->DECL DECLS|$
+DECL->TYPE SHAPE id ;
+TYPE->Tensor < BASIC_TYPE >
+BASIC_TYPE->int | bool | float
+SHAPE->[ const_int ] SHAPE | $
+CONST_BASIC_TYPE->const_int | const_bool | const_float
+TENSOR_1D->[ TENSOR_1D'
+TENSOR_1D'->TENSOR_1D'' TENSOR_1D' | $
+TENSOR_1D''->CONST_BASIC_TYPE TENSOR_1D'''
+TENSOR_1D'''->, | ]
+TENSOR_2D->[ TENSOR_2D'
+TENSOR_2D'->TENSOR_2D'' TENSOR_2D' | $
+TENSOR_2D''->TENSOR_1D TENSOR_2D'''
+TENSOR_2D'''->, | ]
+TENSOR_3D->[ TENSOR_3D'
+TENSOR_3D'->TENSOR_3D'' TENSOR_3D' | $
+TENSOR_3D''->TENSOR_2D TENSOR_3D'''
+TENSOR_3D'''->, | ]
+STMTS->STMT STMTS| $
+STMT->id = ASSIGN ;
+ASSIGN->E | TENSOR_2D
+STMT->read ( F , id ) ;
+STMT->write ( F , id ) ;
+F->stdin|stdout|stderr|fpath
+ADD->+ | -
+MUL->* | /
+EXP->^
+E->T E'
+E'->ADD T E'| $
+T->X T'
+T'->MUL X T'|$
+X->F X'
+X'->EXP F X'|$
+F->( E )|i
+i->CONST_BASIC_TYPE|id
