@@ -62,7 +62,7 @@ bool is_null_in(
 
 vector<string> get_first(
         map<string, SymbolSet> &firsts,     // 所有符号的firsts集合
-        const string& r_exp                        // 获取右边表达式的first集合
+        const string& r_exp                 // 获取右边表达式的first集合
         );
 /*
  * 获取右边表达式的first集合
